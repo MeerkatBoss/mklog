@@ -65,6 +65,7 @@ struct LogMessage
   ContentType contentType;
 
   const char* content;
+  size_t      contentLen;
   time_t      timestamp;
 };
 

@@ -36,6 +36,7 @@ void Logger::logMessage(MessageSeverity severity, MessageSource source,
                         .source      = source,
                         .contentType = contentType,
                         .content     = messageContent,
+                        .contentLen  = contentLen,
                         .timestamp   = timestamp};
 
   // Send LogMessage through LogManager
