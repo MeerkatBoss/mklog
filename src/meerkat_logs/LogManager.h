@@ -25,6 +25,17 @@ namespace meerkat_logs
  */
 class LogManager
 {
+public:
+  /**
+   * @brief File descriptor for long message content
+   */
+  using MessageFd = int;
+
+  /**
+   * @brief Maximum number of characters to append to long message content
+   */
+  static constexpr size_t LONG_MESSAGE_LEN_MAX = 4096;
+
 private:
   static utils::SimpleList<LogWriter*> s_writerList;
 
@@ -76,6 +87,35 @@ public:
    * @param[in] message	  Log message to be sent
    */
   static void logMessage(const LogMessage& message);
+
+  /**
+   * @brief Create file descriptor for new long message. Anything written
+   * to returned `MessageFd` will be appended to `messageTemplate.content`.
+   * If nothing is written to returned `MessageFd`, no message will be
+   * written. Message is not guaranteed to be printed all at once, it may be
+   * split into several messages. Total length of appended content for long
+   * message may not exceed `LogManager::LONG_MESSAGE_LEN_MAX`.
+   *
+   * @param[in] messageTemplate	  Template for long message
+   *
+   * @return File descriptor for message content
+   *
+   * @warning  Any attempt to write more than `LogMessage::LONG_MESSAGE_LEN_MAX`
+   * to returned `MessageFd` results in undefined behaviour.
+   */
+  static MessageFd beginLongMessage(const LogMessage& messageTemplate);
+
+  /**
+   * @brief End long message with file descriptor `fd`. If any content has
+   * been appended, the message is guaranteed to be printed after call to this
+   * function.
+   *
+   * @param[inout] fd     Long message file descriptor
+   *
+   * @warning `fd` is invalidated after call to this function. Do not use it
+   * after call
+   */
+  static void endLongMessage(MessageFd& fd);
 };
 
 } // namespace meerkat_logs
