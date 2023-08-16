@@ -17,7 +17,7 @@ CDEBUG:=-D _DEBUG -ggdb3 -fcheck-new -fsized-deallocation -fstack-protector\
 
 CMACHINE:=-mavx512f -march=native -mtune=native
 
-CFLAGS:=-std=c++2a -fPIE $(CMACHINE) $(CWARN)
+CFLAGS:=-std=c++17 -fPIE $(CMACHINE) $(CWARN)
 BUILDTYPE?=Debug
 
 ifeq ($(BUILDTYPE), Release)

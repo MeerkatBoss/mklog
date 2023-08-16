@@ -14,6 +14,7 @@
 
 #include "meerkat_logs/LogMessage.h"
 #include "meerkat_logs/LogWriter.h"
+#include "meerkat_logs/utils/SimpleList.h"
 
 namespace meerkat_logs
 {
@@ -25,19 +26,7 @@ namespace meerkat_logs
 class LogManager
 {
 private:
-  /**
-   * @brief Linked list node containing LogWriter
-   */
-  struct WriterListNode
-  {
-    LogWriter*      writer;
-    WriterListNode* next;
-  };
-
-  /**
-   * @brief Head of linked list of LogWriter
-   */
-  static WriterListNode* s_writerListHead;
+  static utils::SimpleList<LogWriter*> s_writerList;
 
   /**
    * @brief State of LogManager
@@ -60,6 +49,9 @@ private:
   static void endLogs();
 
 public:
+  // Forbid construction of static class
+  LogManager() = delete;
+
   /**
    * @brief Register new LogWriter in LogManager
    *
@@ -70,8 +62,7 @@ public:
   template <typename TWriter, typename... TArgs>
   static void addWriter(TArgs... args)
   {
-    s_writerListHead = new WriterListNode{.writer = new TWriter(args...),
-                                          .next   = s_writerListHead};
+    s_writerList.pushFront(new TWriter(args...));
   }
 
   /**
