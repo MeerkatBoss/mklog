@@ -12,6 +12,9 @@
 #ifndef __MEERKAT_LOGS_LOGMANAGER_H
 #define __MEERKAT_LOGS_LOGMANAGER_H
 
+#include <csignal>
+#include <signal.h>
+
 #include "meerkat_logs/LogMessage.h"
 #include "meerkat_logs/LogWriter.h"
 #include "meerkat_logs/utils/SimpleList.h"
@@ -36,8 +39,25 @@ public:
    */
   static constexpr size_t LONG_MESSAGE_LEN_MAX = 4096;
 
+  static constexpr MessageFd MESSAGE_FD_INVALID = -1;
+
 private:
+  /**
+   * @brief List of all registered LogWriters
+   */
   static utils::SimpleList<LogWriter*> s_writerList;
+
+  /**
+   * @brief Description of started long message
+   */
+  struct LongMessageInfo
+  {
+    LogMessage message;
+    MessageFd  contentWriteFd;
+    MessageFd  contentReadFd;
+  };
+
+  static utils::SimpleList<LongMessageInfo> s_longMsgList;
 
   /**
    * @brief State of LogManager
@@ -53,6 +73,41 @@ private:
    * @brief Current state of LogManager
    */
   static Status s_currentStatus;
+
+  /**
+   * @brief Signal handled by log manager
+   */
+  struct HandledSignal
+  {
+    int              signal;
+    struct sigaction prevAction;
+  };
+
+  /**
+   * @brief List of all handled signals
+   */
+  static utils::SimpleList<HandledSignal> s_handledSignals;
+
+  /**
+   * @brief All signals LogManager should handle
+   */
+  static constexpr int SIGNALS_TO_HANDLE[] = {SIGFPE,  SIGILL,  SIGSEGV, SIGBUS,
+                                              SIGABRT, SIGSYS,  SIGTERM, SIGINT,
+                                              SIGQUIT, SIGKILL, SIGHUP};
+
+  /**
+   * @brief Handler registered for all `SIGNALS_TO_HANDLE`
+   */
+  static void handleSignal(int signumber);
+
+  /**
+   * @brief Read all long message content and save it
+   *
+   * @param[inout] messageInfo	Long message to read content of
+   *
+   * @return Length of appended content
+   */
+  static size_t appendPipeContent(LongMessageInfo* messageInfo);
 
   /**
    * @brief End all logging. Invalidate LogManager
@@ -98,9 +153,11 @@ public:
    *
    * @param[in] messageTemplate	  Template for long message
    *
-   * @return File descriptor for message content
+   * @return Upon success, return file descriptor for message content
+   *         If error occured while creating long message, return
+   *         `LogManager::MESSAGE_FD_INVALID`
    *
-   * @warning  Any attempt to write more than `LogMessage::LONG_MESSAGE_LEN_MAX`
+   * @warning  Any attempt to write more than `LogManager::LONG_MESSAGE_LEN_MAX`
    * to returned `MessageFd` results in undefined behaviour.
    */
   static MessageFd beginLongMessage(const LogMessage& messageTemplate);
