@@ -29,11 +29,11 @@ private:
   char* loggerName;
 
 public:
-  static constexpr size_t MAX_LOGGER_NAME_LEN = 128;
+  static constexpr size_t NAME_LEN_MAX = 128;
 
   Logger(const char* name)
   {
-    size_t nameLen = strnlen(name, MAX_LOGGER_NAME_LEN);
+    size_t nameLen = strnlen(name, NAME_LEN_MAX);
 
     loggerName = new char[nameLen + 1];
 
@@ -74,7 +74,8 @@ public:
  * @param[in] format	    Log message printf format string
  * @param[in] ...	        Log message printf format arguments
  */
-#define LOG_TRACE(...) __logMessage(Severity::TRACE, ...)
+#define LOG_TRACE(...)                                                         \
+  __LOG_MESSAGE(meerkat_logs::MessageSeverity::TRACE, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity DEBUG
@@ -83,7 +84,8 @@ public:
  * @param[in] format	    Log message printf format string
  * @param[in] ...	        Log message printf format arguments
  */
-#define LOG_DEBUG(...) __logMessage(Severity::DEBUG, ...)
+#define LOG_DEBUG(...)                                                         \
+  __LOG_MESSAGE(meerkat_logs::MessageSeverity::DEBUG, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity INFO
@@ -92,7 +94,8 @@ public:
  * @param[in] format	    Log message printf format string
  * @param[in] ...	        Log message printf format arguments
  */
-#define LOG_INFO(...) __logMessage(Severity::INFO, ...)
+#define LOG_INFO(...)                                                          \
+  __LOG_MESSAGE(meerkat_logs::MessageSeverity::INFO, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity WARNING
@@ -101,7 +104,8 @@ public:
  * @param[in] format	    Log message printf format string
  * @param[in] ...	        Log message printf format arguments
  */
-#define LOG_WARNING(...) __logMessage(Severity::WARNING, ...)
+#define LOG_WARNING(...)                                                       \
+  __LOG_MESSAGE(meerkat_logs::MessageSeverity::WARNING, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity ERROR
@@ -110,7 +114,8 @@ public:
  * @param[in] format	    Log message printf format string
  * @param[in] ...	        Log message printf format arguments
  */
-#define LOG_ERROR(...) __logMessage(Severity::ERROR, ...)
+#define LOG_ERROR(...)                                                         \
+  __LOG_MESSAGE(meerkat_logs::MessageSeverity::ERROR, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity FATAL
@@ -119,9 +124,10 @@ public:
  * @param[in] format	    Log message printf format string
  * @param[in] ...	        Log message printf format arguments
  */
-#define LOG_FATAL(...) __logMessage(Severity::FATAL, ...)
+#define LOG_FATAL(...)                                                         \
+  __LOG_MESSAGE(meerkat_logs::MessageSeverity::FATAL, __VA_ARGS__)
 
-  ~Logger() { delete loggerName; }
+  ~Logger() { delete[] loggerName; }
 };
 
 } // namespace meerkat_logs
