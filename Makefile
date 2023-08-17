@@ -1,29 +1,23 @@
-CC:=g++
+CC:=clang++
 
-CWARN:=-Wall -Wextra -Weffc++ -Waggressive-loop-optimizations -Wc++14-compat\
--Wmissing-declarations -Wcast-align -Wcast-qual -Wchar-subscripts\
--Wconditionally-supported -Wconversion -Wctor-dtor-privacy -Wempty-body\
--Wfloat-equal -Wformat-nonliteral -Wformat-security -Wformat-signedness\
--Wformat=2 -Winline -Wlogical-op -Wnon-virtual-dtor -Wopenmp-simd\
--Woverloaded-virtual -Wpacked -Wpointer-arith -Winit-self -Wredundant-decls\
--Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel\
--Wstrict-overflow=2 -Wsuggest-attribute=noreturn -Wsuggest-final-methods\
--Wsuggest-final-types -Wsuggest-override -Wswitch-default -Wswitch-enum\
--Wsync-nand -Wundef -Wunreachable-code -Wunused -Wuseless-cast\
--Wvariadic-macros -Wno-literal-suffix -Wno-missing-field-initializers\
--Wno-narrowing -Wno-old-style-cast -Wno-varargs -Wstack-protector\
--Wlarger-than=8192 -Wstack-usage=8192
+CWARN:=-Wall -Wextra -Weffc++ -Wcast-align -Wcast-qual -Wchar-subscripts\
+-Wctor-dtor-privacy -Wempty-body -Wfloat-equal -Wformat-nonliteral\
+-Wformat-security -Wformat=2 -Winline -Wnon-virtual-dtor -Woverloaded-virtual\
+-Wpacked -Wpointer-arith -Wredundant-decls -Wsign-promo -Wstrict-overflow=2\
+-Wswitch-default -Wswitch-enum -Wundef -Wunreachable-code -Wunused\
+-Wvariadic-macros -Wno-missing-field-initializers -Wno-narrowing\
+-Wno-old-style-cast -Wno-varargs
 
 CDEBUG:=-D _DEBUG -ggdb3 -fcheck-new -fsized-deallocation -fstack-protector\
--fstrict-overflow -flto-odr-type-merging -fno-omit-frame-pointer\
+-fstrict-overflow -fno-omit-frame-pointer\
 -fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,${strip \
 }float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,${strip \
-}null,object-size,return,returns-nonnull-attribute,shift,${strip \
+}null,return,returns-nonnull-attribute,shift,${strip \
 }signed-integer-overflow,undefined,unreachable,vla-bound,vptr
 
-CMACHINE:=-mavx512f
+CMACHINE:=-mavx512f -march=native -mtune=native
 
-CFLAGS:=-std=c++2a -fPIE -pie $(CMACHINE) $(CWARN)
+CFLAGS:=-std=c++2a -fPIE $(CMACHINE) $(CWARN)
 BUILDTYPE?=Debug
 
 ifeq ($(BUILDTYPE), Release)
@@ -32,7 +26,7 @@ else
 	CFLAGS:=-O0 $(CDEBUG) $(CFLAGS)
 endif
 
-PROJECT	:= project
+PROJECT	:= meerkat_logs
 VERSION := 0.0.1
 
 SRCDIR	:= src
@@ -56,7 +50,8 @@ OBJECTS	:= $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 TESTOBJS:= $(patsubst %,$(OBJDIR)/%,$(TESTS:.$(SRCEXT)=.$(OBJEXT)))
 
 INCFLAGS:= -I$(SRCDIR) -I$(INCDIR)
-LFLAGS  := -Llib/ $(addprefix -l, $(LIBS))
+LFLAGS  := -Llib/ $(addprefix -l, $(LIBS))\
+			-lsfml-graphics -lsfml-window -lsfml-system
 
 all: $(BINDIR)/$(PROJECT)
 
