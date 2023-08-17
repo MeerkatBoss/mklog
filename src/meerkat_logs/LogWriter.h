@@ -58,7 +58,8 @@ protected:
    *
    * @return `true` if message with this type can be written, `false` otherwise
    */
-  virtual bool canAcceptContentType(LogMessage::ContentType contentType) = 0;
+  virtual bool
+  canAcceptContentType(LogMessage::ContentType contentType) const = 0;
 
   /**
    * @brief Write log message
