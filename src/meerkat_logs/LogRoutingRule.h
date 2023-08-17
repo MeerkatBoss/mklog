@@ -35,6 +35,23 @@ public:
   virtual ~LogRoutingRule() = default;
 };
 
+class SeverityRoutingRule : public LogRoutingRule
+{
+private:
+  LogMessage::Severity minSeverity;
+
+public:
+  SeverityRoutingRule(LogMessage::Severity minSeverity)
+      : minSeverity(minSeverity)
+  {
+  }
+
+  bool matchMessage(const LogMessage& message) const override
+  {
+    return message.severity >= minSeverity;
+  }
+};
+
 } // namespace meerkat_logs
 
 #endif /* LogRoutingRule.h */
