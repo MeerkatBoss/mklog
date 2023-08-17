@@ -69,6 +69,10 @@ struct LogMessage
   time_t      timestamp;
 };
 
+using MessageContentType = LogMessage::ContentType;
+using MessageSeverity    = LogMessage::Severity;
+using MessageSource      = LogMessage::Source;
+
 } // namespace meerkat_logs
 
 #endif /* LogMessage.h */

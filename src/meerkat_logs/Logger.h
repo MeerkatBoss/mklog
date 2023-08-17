@@ -19,10 +19,6 @@
 namespace meerkat_logs
 {
 
-using MessageContentType = LogMessage::ContentType;
-using MessageSeverity    = LogMessage::Severity;
-using MessageSource      = LogMessage::Source;
-
 class Logger
 {
 private:
@@ -59,6 +55,30 @@ public:
                   MessageContentType contentType, const char* format, ...)
       __attribute__((__format__(__printf__, 5, 6)));
 
+  /**
+   * @brief Register new long message. Cannot be called directly, use
+   * LOG_BEGIN_* macros instead.
+   *
+   * @param[in] severity	  Log message severity
+   * @param[in] source	    Log message source
+   * @param[in] contentType Log message content type
+   * @param[in] format	    Log message printf format string
+   * @param[in] ...	        Log message printf format arguments
+   *
+   * @return File descriptor for long message content
+   */
+  LogManager::MessageFd
+  beginLongMessage(MessageSeverity severity, MessageSource source,
+                   MessageContentType contentType, const char* format, ...)
+      __attribute__((__format__(__printf__, 5, 6)));
+
+  /**
+   * @brief End long message. Invalidate `messageFd`
+   *
+   * @param[inout] messageFd	Content file descriptor for long message
+   */
+  void endLongMessage(LogManager::MessageFd& messageFd);
+
 #define __LOG_MESSAGE(severity, type, ...)                                     \
   logMessage(severity,                                                         \
              {.file     = __FILE__,                                            \
@@ -66,6 +86,14 @@ public:
               .line     = __LINE__,                                            \
               .logger   = nullptr},                                              \
              type, __VA_ARGS__)
+
+#define __LOG_BEGIN(severity, type, ...)                                       \
+  beginLongMessage(severity,                                                   \
+                   {.file     = __FILE__,                                      \
+                    .function = __PRETTY_FUNCTION__,                           \
+                    .line     = __LINE__,                                      \
+                    .logger   = nullptr},                                        \
+                   type, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity TRACE
@@ -126,6 +154,78 @@ public:
  */
 #define LOG_FATAL(...)                                                         \
   __LOG_MESSAGE(meerkat_logs::MessageSeverity::FATAL, __VA_ARGS__)
+
+/**
+ * @brief Register new long message with severity TRACE
+ *
+ * @param[in] contentType Log message content type
+ * @param[in] format	    Log message printf format string
+ * @param[in] ...	        Log message printf format arguments
+ *
+ * @return File descriptor for long message content
+ */
+#define LOG_BEGIN_TRACE(...)                                                   \
+  __LOG_BEGIN(meerkat_logs::MessageSeverity::TRACE, __VA_ARGS__)
+
+/**
+ * @brief Register new long message with severity DEBUG
+ *
+ * @param[in] contentType Log message content type
+ * @param[in] format	    Log message printf format string
+ * @param[in] ...	        Log message printf format arguments
+ *
+ * @return File descriptor for long message content
+ */
+#define LOG_BEGIN_DEBUG(...)                                                   \
+  __LOG_BEGIN(meerkat_logs::MessageSeverity::DEBUG, __VA_ARGS__)
+
+/**
+ * @brief Register new long message with severity INFO
+ *
+ * @param[in] contentType Log message content type
+ * @param[in] format	    Log message printf format string
+ * @param[in] ...	        Log message printf format arguments
+ *
+ * @return File descriptor for long message content
+ */
+#define LOG_BEGIN_INFO(...)                                                    \
+  __LOG_BEGIN(meerkat_logs::MessageSeverity::INFO, __VA_ARGS__)
+
+/**
+ * @brief Register new long message with severity WARNING
+ *
+ * @param[in] contentType Log message content type
+ * @param[in] format	    Log message printf format string
+ * @param[in] ...	        Log message printf format arguments
+ *
+ * @return File descriptor for long message content
+ */
+#define LOG_BEGIN_WARNING(...)                                                 \
+  __LOG_BEGIN(meerkat_logs::MessageSeverity::WARNING, __VA_ARGS__)
+
+/**
+ * @brief Register new long message with severity ERROR
+ *
+ * @param[in] contentType Log message content type
+ * @param[in] format	    Log message printf format string
+ * @param[in] ...	        Log message printf format arguments
+ *
+ * @return File descriptor for long message content
+ */
+#define LOG_BEGIN_ERROR(...)                                                   \
+  __LOG_BEGIN(meerkat_logs::MessageSeverity::ERROR, __VA_ARGS__)
+
+/**
+ * @brief Register new long message with severity FATAL
+ *
+ * @param[in] contentType Log message content type
+ * @param[in] format	    Log message printf format string
+ * @param[in] ...	        Log message printf format arguments
+ *
+ * @return File descriptor for long message content
+ */
+#define LOG_BEGIN_FATAL(...)                                                   \
+  __LOG_BEGIN(meerkat_logs::MessageSeverity::FATAL, __VA_ARGS__)
 
   ~Logger() { delete[] loggerName; }
 };
