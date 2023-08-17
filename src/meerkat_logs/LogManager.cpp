@@ -40,11 +40,12 @@ void LogManager::handleSignal(int signumber)
       logMessage(messageInfo.message);
 
       // Make empty content
-      char* newContent = new char[1];
-      newContent[0]    = '\0';
+      char* newContent = new char[2];
+      newContent[0]    = '\n';
+      newContent[1]    = '\0';
       delete[] messageInfo.message.content;
       messageInfo.message.content    = newContent;
-      messageInfo.message.contentLen = 1;
+      messageInfo.message.contentLen = 2;
     }
   }
 

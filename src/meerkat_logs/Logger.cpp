@@ -60,8 +60,8 @@ LogManager::MessageFd Logger::beginLongMessage(MessageSeverity    severity,
   // Calculate message content length
   va_list args = {};
   va_start(args, format);
-  // Add 1 for NUL terminator -------------------------------v
-  const size_t contentLen = vsnprintf(NULL, 0, format, args) + 1;
+  // Add 2 for NUL terminator and LF ------------------------v
+  const size_t contentLen = vsnprintf(NULL, 0, format, args) + 2;
   va_end(args);
 
   // Produce message content
@@ -69,6 +69,9 @@ LogManager::MessageFd Logger::beginLongMessage(MessageSeverity    severity,
   va_start(args, format);
   vsnprintf(messageContent, contentLen, format, args);
   va_end(args);
+  // Add LF
+  messageContent[contentLen - 2] = '\n';
+  messageContent[contentLen - 1] = '\0';
 
   // Construct LogMessage
   LogMessage message = {.severity    = severity,
