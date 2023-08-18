@@ -126,9 +126,11 @@ public:
    * @param[in] ...	  TWriter constructor arguments
    */
   template <typename TWriter, typename... TArgs>
-  static void addWriter(TArgs... args)
+  static TWriter& addWriter(TArgs... args)
   {
-    s_writerList.pushFront(new TWriter(args...));
+    TWriter* writer = new TWriter(args...);
+    s_writerList.pushFront(writer);
+    return *writer;
   }
 
   /**

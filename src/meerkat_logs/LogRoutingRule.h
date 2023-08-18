@@ -52,6 +52,14 @@ public:
   }
 };
 
+/**
+ * @brief Route all messages
+ */
+class DefaultRoutingRule : public LogRoutingRule
+{
+  bool matchMessage(const LogMessage&) const override { return true; }
+};
+
 } // namespace meerkat_logs
 
 #endif /* LogRoutingRule.h */

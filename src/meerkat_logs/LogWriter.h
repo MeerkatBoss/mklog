@@ -70,9 +70,9 @@ protected:
    */
   virtual Status writeMessage(const LogMessage& message) = 0;
 
-public:
-  LogWriter(const LogRoute& route) : route(route) {}
+  LogWriter() : route(LogRoute::makeRoute<DefaultRoutingRule>()) {}
 
+public:
   /**
    * @brief Write log message if it matches routing rules for this LogWriter
    *
@@ -92,6 +92,12 @@ public:
     }
 
     return writeMessage(message);
+  }
+
+  LogWriter& setRoute(const LogRoute& route)
+  {
+    this->route = route;
+    return *this;
   }
 
   virtual ~LogWriter() = default;

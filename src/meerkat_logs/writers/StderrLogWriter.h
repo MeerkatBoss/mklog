@@ -24,7 +24,7 @@ namespace meerkat_logs
 class StderrLogWriter : public LogWriter
 {
 private:
-  const bool useEscapeCodes;
+  bool useEscapeCodes;
 
 protected:
   bool canAcceptContentType(LogMessage::ContentType contentType) const override
@@ -36,9 +36,15 @@ protected:
   Status writeMessage(const LogMessage& message) override;
 
 public:
-  StderrLogWriter(LogRoute route, bool useEscapeCodes)
-      : LogWriter(route), useEscapeCodes(useEscapeCodes)
+  StderrLogWriter(bool useEscapeCodes = false)
+      : LogWriter(), useEscapeCodes(useEscapeCodes)
   {
+  }
+
+  StderrLogWriter& useAnsiColors()
+  {
+    useEscapeCodes = true;
+    return *this;
   }
 };
 

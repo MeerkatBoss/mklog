@@ -28,10 +28,11 @@ void setupLogs()
   using meerkat_logs::LogRoute;
   using meerkat_logs::MessageSeverity;
 
-  LogManager::addWriter<meerkat_logs::StderrLogWriter>(
-      LogRoute::makeRoute<meerkat_logs::SeverityRoutingRule>(
-          /* minLevel = */ MessageSeverity::INFO),
-      /* useEscapeCodes = */ true);
+  LogManager::addWriter<meerkat_logs::StderrLogWriter>()
+      .useAnsiColors()
+      .setRoute(LogRoute::makeRoute<meerkat_logs::SeverityRoutingRule>(
+          /* minSeverity = */ MessageSeverity::INFO));
+
   LogManager::initLogs();
 }
 
