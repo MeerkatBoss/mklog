@@ -8,6 +8,7 @@
 #include "meerkat_logs/LogRoutingRule.h"
 #include "meerkat_logs/Logger.h"
 #include "meerkat_logs/writers/StderrLogWriter.h"
+#include "meerkat_logs/writers/TextLogWriter.h"
 
 #define fassert(fd, condition, message)                                        \
   do                                                                           \
@@ -35,6 +36,13 @@ void setupLogs()
   LogManager::addWriter<meerkat_logs::StderrLogWriter>()
       .useAnsiColors()
       .setRoute(minSeverityInfo);
+
+  auto& textLogs = LogManager::addWriter<meerkat_logs::TextLogWriter>().setFile(
+      ".logs/log.txt");
+  if (!textLogs.valid())
+  {
+    textLogs.setFile("log.txt");
+  }
 
   LogManager::initLogs();
 }
