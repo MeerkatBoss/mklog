@@ -7,6 +7,7 @@
 #include "meerkat_logs/LogRoute.h"
 #include "meerkat_logs/LogRoutingRule.h"
 #include "meerkat_logs/Logger.h"
+#include "meerkat_logs/writers/HtmlLogWriter.h"
 #include "meerkat_logs/writers/StderrLogWriter.h"
 #include "meerkat_logs/writers/TextLogWriter.h"
 
@@ -38,10 +39,17 @@ void setupLogs()
       .setRoute(minSeverityInfo);
 
   auto& textLogs = LogManager::addWriter<meerkat_logs::TextLogWriter>().setFile(
-      ".logs/log.txt");
+      ".log/log.txt");
   if (!textLogs.valid())
   {
     textLogs.setFile("log.txt");
+  }
+
+  auto& htmlLogs = LogManager::addWriter<meerkat_logs::HtmlLogWriter>().setFile(
+      ".log/log.html");
+  if (!htmlLogs.valid())
+  {
+    htmlLogs.setFile("log.html");
   }
 
   LogManager::initLogs();
@@ -60,6 +68,11 @@ int main()
 
   logger.LOG_INFO(MessageContentType::TEXT, "Started logs");
   logger.LOG_TRACE(MessageContentType::TEXT, "Entered main()");
+  logger.LOG_DEBUG(
+      MessageContentType::CODE,
+      "<span class=\"message\"> this is not message &amp; </span>\n"
+      "<img src=\"img/image.png\"/>");
+  logger.LOG_WARNING(MessageContentType::IMAGE, "img/log.png");
   LogMessageFd longMsgFd =
       logger.LOG_BEGIN_INFO(MessageContentType::TEXT, "This is a long message");
 
