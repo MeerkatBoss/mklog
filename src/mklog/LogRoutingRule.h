@@ -12,9 +12,9 @@
 #ifndef __MEERKAT_LOGS_LOGROUTINGRULE_H
 #define __MEERKAT_LOGS_LOGROUTINGRULE_H
 
-#include "meerkat_logs/LogMessage.h"
+#include "mklog/LogMessage.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 /**
@@ -60,6 +60,6 @@ class DefaultRoutingRule : public LogRoutingRule
   bool matchMessage(const LogMessage&) const override { return true; }
 };
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* LogRoutingRule.h */

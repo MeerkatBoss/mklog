@@ -1,4 +1,4 @@
-#include "meerkat_logs/LogManager.h"
+#include "mklog/LogManager.h"
 
 #include <bits/types/sigset_t.h>
 #include <cassert>
@@ -10,10 +10,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "meerkat_logs/LogWriter.h"
-#include "meerkat_logs/utils/SimpleList.h"
+#include "mklog/LogWriter.h"
+#include "mklog/utils/SimpleList.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 utils::SimpleList<LogWriter*> LogManager::s_writerList =
@@ -145,7 +145,7 @@ void LogManager::endLogs()
 
   // Mark LogManager as deinitialized
   s_currentStatus = Status::UNINITIALIZED;
-} // namespace meerkat_logs
+} // namespace mklog
 
 void LogManager::initLogs()
 {
@@ -278,4 +278,4 @@ void LogManager::endLongMessage(LogManager::MessageFd& fd)
   fd = MESSAGE_FD_INVALID;
 }
 
-} // namespace meerkat_logs
+} // namespace mklog

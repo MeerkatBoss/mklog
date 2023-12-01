@@ -1,4 +1,4 @@
-#include "meerkat_logs/writers/TextLogWriter.h"
+#include "mklog/writers/TextLogWriter.h"
 
 #include <cassert>
 #include <cstdio>
@@ -6,9 +6,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "meerkat_logs/LogWriter.h"
+#include "mklog/LogWriter.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 TextLogWriter& TextLogWriter::setFile(const char* filename)
@@ -75,4 +75,4 @@ LogWriter::Status TextLogWriter::writeMessage(const LogMessage& message)
   return Status::OK;
 }
 
-} // namespace meerkat_logs
+} // namespace mklog

@@ -12,10 +12,10 @@
 #ifndef __MEERKAT_LOGS_WRITERS_STDERRLOGWRITER_H
 #define __MEERKAT_LOGS_WRITERS_STDERRLOGWRITER_H
 
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogRoute.h"
-#include "meerkat_logs/LogWriter.h"
-namespace meerkat_logs
+#include "mklog/LogMessage.h"
+#include "mklog/LogRoute.h"
+#include "mklog/LogWriter.h"
+namespace mklog
 {
 
 /**
@@ -48,6 +48,6 @@ public:
   }
 };
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* StderrLogWriter.h */

@@ -15,11 +15,11 @@
 #include <csignal>
 #include <signal.h>
 
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogWriter.h"
-#include "meerkat_logs/utils/SimpleList.h"
+#include "mklog/LogMessage.h"
+#include "mklog/LogWriter.h"
+#include "mklog/utils/SimpleList.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 /**
@@ -177,6 +177,6 @@ public:
   static void endLongMessage(MessageFd& fd);
 };
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* LogManager.h */

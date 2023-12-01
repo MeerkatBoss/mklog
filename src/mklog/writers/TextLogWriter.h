@@ -15,9 +15,9 @@
 #include <cassert>
 #include <fcntl.h>
 
-#include "meerkat_logs/LogWriter.h"
+#include "mklog/LogWriter.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 /**
@@ -45,6 +45,6 @@ public:
   bool valid() { return isValid; }
 };
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* TextLogWriter.h */

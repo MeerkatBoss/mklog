@@ -15,7 +15,7 @@
 #include <cassert>
 #include <cstddef>
 
-namespace meerkat_logs
+namespace mklog
 {
 
 namespace utils
@@ -178,6 +178,6 @@ public:
 
 } // namespace utils
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* SimpleList.h */

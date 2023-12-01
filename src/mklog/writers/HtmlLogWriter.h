@@ -12,10 +12,10 @@
 #ifndef __MEERKAT_LOGS_WRITERS_HTMLLOGWRITER_H
 #define __MEERKAT_LOGS_WRITERS_HTMLLOGWRITER_H
 
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogWriter.h"
+#include "mklog/LogMessage.h"
+#include "mklog/LogWriter.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 /**
@@ -58,6 +58,6 @@ public:
   bool valid() { return isValid; }
 };
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* HtmlLogWriter.h */

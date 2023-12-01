@@ -1,11 +1,11 @@
-#include "meerkat_logs/writers/StderrLogWriter.h"
+#include "mklog/writers/StderrLogWriter.h"
 
 #include <cstdio>
 
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogWriter.h"
+#include "mklog/LogMessage.h"
+#include "mklog/LogWriter.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 class EscapeCodes
@@ -109,4 +109,4 @@ LogWriter::Status StderrLogWriter::writeMessage(const LogMessage& message)
   return LogWriter::Status::OK;
 }
 
-} // namespace meerkat_logs
+} // namespace mklog

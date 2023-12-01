@@ -1,12 +1,12 @@
-#include "meerkat_logs/Logger.h"
+#include "mklog/Logger.h"
 
 #include <cstdarg>
 #include <cstdio>
 #include <ctime>
 
-#include "meerkat_logs/LogManager.h"
+#include "mklog/LogManager.h"
 
-namespace meerkat_logs // TODO: Maybe meerkat::logs?
+namespace mklog // TODO: Maybe meerkat::logs?
 {
 
 void Logger::logMessage(MessageSeverity severity, MessageSource source,
@@ -94,4 +94,4 @@ void Logger::endLongMessage(LogManager::MessageFd& messageFd)
 {
   LogManager::endLongMessage(messageFd);
 }
-} // namespace meerkat_logs
+} // namespace mklog

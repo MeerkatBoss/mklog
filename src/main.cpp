@@ -2,14 +2,14 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include "meerkat_logs/LogManager.h"
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogRoute.h"
-#include "meerkat_logs/LogRoutingRule.h"
-#include "meerkat_logs/Logger.h"
-#include "meerkat_logs/writers/HtmlLogWriter.h"
-#include "meerkat_logs/writers/StderrLogWriter.h"
-#include "meerkat_logs/writers/TextLogWriter.h"
+#include "mklog/LogManager.h"
+#include "mklog/LogMessage.h"
+#include "mklog/LogRoute.h"
+#include "mklog/LogRoutingRule.h"
+#include "mklog/Logger.h"
+#include "mklog/writers/HtmlLogWriter.h"
+#include "mklog/writers/StderrLogWriter.h"
+#include "mklog/writers/TextLogWriter.h"
 
 #define fassert(fd, condition, message)                                        \
   do                                                                           \
@@ -26,26 +26,26 @@ void dummyHandler(int) { puts("Interrupt handled in main.cpp"); }
 
 void setupLogs()
 {
-  using meerkat_logs::LogManager; // TODO: Load config from file
-  using meerkat_logs::LogRoute;
-  using meerkat_logs::MessageSeverity;
+  using mklog::LogManager; // TODO: Load config from file
+  using mklog::LogRoute;
+  using mklog::MessageSeverity;
 
   LogRoute minSeverityInfo =
-      LogRoute::makeRoute<meerkat_logs::SeverityRoutingRule>(
+      LogRoute::makeRoute<mklog::SeverityRoutingRule>(
           /* minSeverity = */ MessageSeverity::INFO);
 
-  LogManager::addWriter<meerkat_logs::StderrLogWriter>()
+  LogManager::addWriter<mklog::StderrLogWriter>()
       .useAnsiColors()
       .setRoute(minSeverityInfo);
 
-  auto& textLogs = LogManager::addWriter<meerkat_logs::TextLogWriter>().setFile(
+  auto& textLogs = LogManager::addWriter<mklog::TextLogWriter>().setFile(
       ".log/log.txt");
   if (!textLogs.valid())
   {
     textLogs.setFile("log.txt");
   }
 
-  auto& htmlLogs = LogManager::addWriter<meerkat_logs::HtmlLogWriter>().setFile(
+  auto& htmlLogs = LogManager::addWriter<mklog::HtmlLogWriter>().setFile(
       ".log/log.html");
   if (!htmlLogs.valid())
   {
@@ -57,9 +57,9 @@ void setupLogs()
 
 int main()
 {
-  using meerkat_logs::Logger;
-  using meerkat_logs::MessageContentType;
-  using LogMessageFd = meerkat_logs::LogManager::MessageFd;
+  using mklog::Logger;
+  using mklog::MessageContentType;
+  using LogMessageFd = mklog::LogManager::MessageFd;
 
   sigset(SIGINT, &dummyHandler);
   setupLogs();

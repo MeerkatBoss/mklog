@@ -1,4 +1,4 @@
-#include "meerkat_logs/writers/HtmlLogWriter.h"
+#include "mklog/writers/HtmlLogWriter.h"
 
 #include <cassert>
 #include <cstdio>
@@ -6,10 +6,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogWriter.h"
+#include "mklog/LogMessage.h"
+#include "mklog/LogWriter.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 static constexpr char PREAMBLE[] = "<body><pre>";
@@ -228,4 +228,4 @@ LogWriter::Status HtmlLogWriter::writeMessage(const LogMessage& message)
   return LogWriter::Status::OK;
 }
 
-} // namespace meerkat_logs
+} // namespace mklog

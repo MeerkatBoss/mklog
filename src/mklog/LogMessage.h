@@ -15,7 +15,7 @@
 #include <cstddef>
 #include <ctime>
 
-namespace meerkat_logs
+namespace mklog
 {
 
 /**
@@ -73,6 +73,6 @@ using MessageContentType = LogMessage::ContentType;
 using MessageSeverity    = LogMessage::Severity;
 using MessageSource      = LogMessage::Source;
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* LogMessage.h */

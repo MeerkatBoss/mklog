@@ -12,10 +12,10 @@
 #ifndef __MEERKAT_LOGS_LOGWRITER_H
 #define __MEERKAT_LOGS_LOGWRITER_H
 
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogRoute.h"
+#include "mklog/LogMessage.h"
+#include "mklog/LogRoute.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 /**
@@ -103,6 +103,6 @@ public:
   virtual ~LogWriter() = default;
 };
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* LogWriter.h */

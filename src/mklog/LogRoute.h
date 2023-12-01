@@ -12,10 +12,10 @@
 #ifndef __MEERKAT_LOGS_LOGROUTE_H
 #define __MEERKAT_LOGS_LOGROUTE_H
 
-#include "meerkat_logs/LogMessage.h"
-#include "meerkat_logs/LogRoutingRule.h"
+#include "mklog/LogMessage.h"
+#include "mklog/LogRoutingRule.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 /**
@@ -171,6 +171,6 @@ inline LogRoute operator!(const LogRoute& route)
   return LogRoute::makeRoute<LogRoutingRuleNot>(route);
 }
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* LogRoute.h */

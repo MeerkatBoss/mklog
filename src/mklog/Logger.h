@@ -14,9 +14,9 @@
 
 #include <cstring>
 
-#include "meerkat_logs/LogManager.h"
+#include "mklog/LogManager.h"
 
-namespace meerkat_logs
+namespace mklog
 {
 
 class Logger
@@ -103,7 +103,7 @@ public:
  * @param[in] ...	        Log message printf format arguments
  */
 #define LOG_TRACE(...)                                                         \
-  __LOG_MESSAGE(meerkat_logs::MessageSeverity::TRACE, __VA_ARGS__)
+  __LOG_MESSAGE(mklog::MessageSeverity::TRACE, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity DEBUG
@@ -113,7 +113,7 @@ public:
  * @param[in] ...	        Log message printf format arguments
  */
 #define LOG_DEBUG(...)                                                         \
-  __LOG_MESSAGE(meerkat_logs::MessageSeverity::DEBUG, __VA_ARGS__)
+  __LOG_MESSAGE(mklog::MessageSeverity::DEBUG, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity INFO
@@ -123,7 +123,7 @@ public:
  * @param[in] ...	        Log message printf format arguments
  */
 #define LOG_INFO(...)                                                          \
-  __LOG_MESSAGE(meerkat_logs::MessageSeverity::INFO, __VA_ARGS__)
+  __LOG_MESSAGE(mklog::MessageSeverity::INFO, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity WARNING
@@ -133,7 +133,7 @@ public:
  * @param[in] ...	        Log message printf format arguments
  */
 #define LOG_WARNING(...)                                                       \
-  __LOG_MESSAGE(meerkat_logs::MessageSeverity::WARNING, __VA_ARGS__)
+  __LOG_MESSAGE(mklog::MessageSeverity::WARNING, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity ERROR
@@ -143,7 +143,7 @@ public:
  * @param[in] ...	        Log message printf format arguments
  */
 #define LOG_ERROR(...)                                                         \
-  __LOG_MESSAGE(meerkat_logs::MessageSeverity::ERROR, __VA_ARGS__)
+  __LOG_MESSAGE(mklog::MessageSeverity::ERROR, __VA_ARGS__)
 
 /**
  * @brief Issue new log message with severity FATAL
@@ -153,7 +153,7 @@ public:
  * @param[in] ...	        Log message printf format arguments
  */
 #define LOG_FATAL(...)                                                         \
-  __LOG_MESSAGE(meerkat_logs::MessageSeverity::FATAL, __VA_ARGS__)
+  __LOG_MESSAGE(mklog::MessageSeverity::FATAL, __VA_ARGS__)
 
 /**
  * @brief Register new long message with severity TRACE
@@ -165,7 +165,7 @@ public:
  * @return File descriptor for long message content
  */
 #define LOG_BEGIN_TRACE(...)                                                   \
-  __LOG_BEGIN(meerkat_logs::MessageSeverity::TRACE, __VA_ARGS__)
+  __LOG_BEGIN(mklog::MessageSeverity::TRACE, __VA_ARGS__)
 
 /**
  * @brief Register new long message with severity DEBUG
@@ -177,7 +177,7 @@ public:
  * @return File descriptor for long message content
  */
 #define LOG_BEGIN_DEBUG(...)                                                   \
-  __LOG_BEGIN(meerkat_logs::MessageSeverity::DEBUG, __VA_ARGS__)
+  __LOG_BEGIN(mklog::MessageSeverity::DEBUG, __VA_ARGS__)
 
 /**
  * @brief Register new long message with severity INFO
@@ -189,7 +189,7 @@ public:
  * @return File descriptor for long message content
  */
 #define LOG_BEGIN_INFO(...)                                                    \
-  __LOG_BEGIN(meerkat_logs::MessageSeverity::INFO, __VA_ARGS__)
+  __LOG_BEGIN(mklog::MessageSeverity::INFO, __VA_ARGS__)
 
 /**
  * @brief Register new long message with severity WARNING
@@ -201,7 +201,7 @@ public:
  * @return File descriptor for long message content
  */
 #define LOG_BEGIN_WARNING(...)                                                 \
-  __LOG_BEGIN(meerkat_logs::MessageSeverity::WARNING, __VA_ARGS__)
+  __LOG_BEGIN(mklog::MessageSeverity::WARNING, __VA_ARGS__)
 
 /**
  * @brief Register new long message with severity ERROR
@@ -213,7 +213,7 @@ public:
  * @return File descriptor for long message content
  */
 #define LOG_BEGIN_ERROR(...)                                                   \
-  __LOG_BEGIN(meerkat_logs::MessageSeverity::ERROR, __VA_ARGS__)
+  __LOG_BEGIN(mklog::MessageSeverity::ERROR, __VA_ARGS__)
 
 /**
  * @brief Register new long message with severity FATAL
@@ -225,11 +225,11 @@ public:
  * @return File descriptor for long message content
  */
 #define LOG_BEGIN_FATAL(...)                                                   \
-  __LOG_BEGIN(meerkat_logs::MessageSeverity::FATAL, __VA_ARGS__)
+  __LOG_BEGIN(mklog::MessageSeverity::FATAL, __VA_ARGS__)
 
   ~Logger() { delete[] loggerName; }
 };
 
-} // namespace meerkat_logs
+} // namespace mklog
 
 #endif /* Logger.h */
