@@ -6,7 +6,7 @@
 
 #include "meerkat_logs/LogManager.h"
 
-namespace meerkat_logs
+namespace meerkat_logs // TODO: Maybe meerkat::logs?
 {
 
 void Logger::logMessage(MessageSeverity severity, MessageSource source,
@@ -26,7 +26,7 @@ void Logger::logMessage(MessageSeverity severity, MessageSource source,
   va_end(args);
 
   // Produce message content
-  char* messageContent = new char[contentLen];
+  char* messageContent = new char[contentLen]; // TODO: Reuse memory
   va_start(args, format);
   vsnprintf(messageContent, contentLen, format, args);
   va_end(args);

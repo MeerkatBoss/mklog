@@ -24,7 +24,7 @@ namespace meerkat_logs
  */
 class LogRoute
 {
-private:
+private: // TODO: Maybe write public before private
   /// Rule controlling the filter
   LogRoutingRule* routingRule;
 
@@ -32,7 +32,7 @@ private:
   size_t* refCount;
 
   LogRoute(LogRoutingRule* routingRule, size_t* refCount)
-      : routingRule(routingRule), refCount(refCount)
+      : routingRule(routingRule), refCount(refCount) // refCount(new size_t{1})
   {
   }
 
@@ -63,7 +63,7 @@ public:
     if (this == &other)
       return *this;
 
-    this->~LogRoute();
+    this->~LogRoute(); // TODO: Extract to function, do not call dtor
 
     routingRule = other.routingRule;
     refCount    = other.refCount;

@@ -26,7 +26,7 @@ void dummyHandler(int) { puts("Interrupt handled in main.cpp"); }
 
 void setupLogs()
 {
-  using meerkat_logs::LogManager;
+  using meerkat_logs::LogManager; // TODO: Load config from file
   using meerkat_logs::LogRoute;
   using meerkat_logs::MessageSeverity;
 
