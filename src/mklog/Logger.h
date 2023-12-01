@@ -79,6 +79,11 @@ public:
    */
   void endLongMessage(LogManager::MessageFd& messageFd);
 
+  /**
+   * @brief Do not print message
+   */
+  void doNothing(void) const {}
+
 #define __LOG_MESSAGE(severity, type, ...)                                     \
   logMessage(severity,                                                         \
              {.file     = __FILE__,                                            \
@@ -95,6 +100,8 @@ public:
                     .logger   = nullptr},                                        \
                    type, __VA_ARGS__)
 
+#ifndef NLOG_TRACE
+
 /**
  * @brief Issue new log message with severity TRACE
  *
@@ -104,6 +111,14 @@ public:
  */
 #define LOG_TRACE(...)                                                         \
   __LOG_MESSAGE(mklog::MessageSeverity::TRACE, __VA_ARGS__)
+
+#else
+
+#define LOG_TRACE(...) doNothing()
+
+#endif // NLOG_TRACE
+
+#ifndef NLOG_DEBUG
 
 /**
  * @brief Issue new log message with severity DEBUG
@@ -115,6 +130,14 @@ public:
 #define LOG_DEBUG(...)                                                         \
   __LOG_MESSAGE(mklog::MessageSeverity::DEBUG, __VA_ARGS__)
 
+#else
+
+#define LOG_DEBUG(...) doNothing()
+
+#endif // NLOG_DEBUG
+
+#ifndef NLOG_INFO
+
 /**
  * @brief Issue new log message with severity INFO
  *
@@ -124,6 +147,15 @@ public:
  */
 #define LOG_INFO(...)                                                          \
   __LOG_MESSAGE(mklog::MessageSeverity::INFO, __VA_ARGS__)
+
+#else
+
+#define LOG_INFO(...)
+
+#endif // NLOG_INFO
+
+
+#ifndef NLOG_WARNING
 
 /**
  * @brief Issue new log message with severity WARNING
@@ -135,6 +167,15 @@ public:
 #define LOG_WARNING(...)                                                       \
   __LOG_MESSAGE(mklog::MessageSeverity::WARNING, __VA_ARGS__)
 
+#else
+
+#define LOG_WARNING(...) doNothing()
+
+#endif // NLOG_WARNING
+
+
+#ifndef NLOG_ERROR
+
 /**
  * @brief Issue new log message with severity ERROR
  *
@@ -145,6 +186,15 @@ public:
 #define LOG_ERROR(...)                                                         \
   __LOG_MESSAGE(mklog::MessageSeverity::ERROR, __VA_ARGS__)
 
+#else
+
+#define LOG_ERROR(...) doNothing()
+
+#endif // NLOG_ERROR
+
+
+#ifndef NLOG_FATAL
+
 /**
  * @brief Issue new log message with severity FATAL
  *
@@ -154,6 +204,14 @@ public:
  */
 #define LOG_FATAL(...)                                                         \
   __LOG_MESSAGE(mklog::MessageSeverity::FATAL, __VA_ARGS__)
+
+#else
+
+#define LOG_FATAL(...) doNothing()
+
+#endif // NLOG_FATAL
+
+// TODO: Conditionally disable LOG_BEGIN macros
 
 /**
  * @brief Register new long message with severity TRACE
