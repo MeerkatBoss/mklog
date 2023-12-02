@@ -32,20 +32,13 @@ static const char* getSeverityString(LogMessage::Severity severity)
 
   switch (severity)
   {
-  case Severity::TRACE:
-    return "TRACE";
-  case Severity::DEBUG:
-    return "DEBUG";
-  case Severity::INFO:
-    return "INFO";
-  case Severity::WARNING:
-    return "WARNING";
-  case Severity::ERROR:
-    return "ERROR";
-  case Severity::FATAL:
-    return "FATAL";
-  default:
-    return "UNKNOWN";
+  case Severity::TRACE:   return " TRACE ";
+  case Severity::DEBUG:   return " DEBUG ";
+  case Severity::INFO:    return " INFO  ";
+  case Severity::WARNING: return "WARNING";
+  case Severity::ERROR:   return " ERROR ";
+  case Severity::FATAL:   return " FATAL ";
+  default:                return "UNKNOWN";
   }
 }
 
@@ -69,7 +62,7 @@ LogWriter::Status TextLogWriter::writeMessage(const LogMessage& message)
 
   const char* time     = getTimeString(message.timestamp);
   const char* severity = getSeverityString(message.severity);
-  dprintf(logFd, "<%s> [%s]\t'%s' in '%s' at '%s:%zu':\t%.*s\n", time, severity,
+  dprintf(logFd, "<%s> [%s] '%s' in '%s' at '%s:%zu': %.*s\n", time, severity,
           message.source.logger, message.source.function, message.source.file,
           message.source.line, (int)message.contentLen, message.content);
   return Status::OK;
