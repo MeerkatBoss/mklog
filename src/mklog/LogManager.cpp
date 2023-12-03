@@ -176,8 +176,10 @@ void LogManager::initLogs()
 void LogManager::logMessage(const LogMessage& message)
 {
   // Check that LogManager is ready
-  assert(s_currentStatus == Status::READY &&
-         "Cannot send log message: LogManager is not ready");
+  if (s_currentStatus != Status::READY)
+  {
+    return;
+  }
 
   // For each registered writer
   for (LogWriter* writer : s_writerList)
@@ -189,6 +191,11 @@ void LogManager::logMessage(const LogMessage& message)
 
 LogManager::MessageFd LogManager::beginLongMessage(const LogMessage& message)
 {
+  if (s_currentStatus != Status::READY)
+  {
+    return STDERR_FILENO;
+  }
+
   MessageFd pipeFds[2] = {MESSAGE_FD_INVALID, MESSAGE_FD_INVALID};
 
   // Open pipe for message content
@@ -226,6 +233,11 @@ LogManager::MessageFd LogManager::beginLongMessage(const LogMessage& message)
 
 void LogManager::endLongMessage(LogManager::MessageFd& fd)
 {
+  if (s_currentStatus != Status::READY)
+  {
+    return;
+  }
+
   // Check input fd
   assert(fd != MESSAGE_FD_INVALID && "Attempted access with invalid fd");
 

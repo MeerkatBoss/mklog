@@ -84,13 +84,21 @@ public:
    */
   void doNothing(void) const {}
 
+#ifndef NLOGS
+
 #define __LOG_MESSAGE(severity, type, ...)                                     \
   logMessage(severity,                                                         \
              {.file     = __FILE__,                                            \
               .function = __PRETTY_FUNCTION__,                                 \
               .line     = __LINE__,                                            \
-              .logger   = nullptr},                                              \
+              .logger   = nullptr},                                            \
              type, __VA_ARGS__)
+
+#else
+
+#define __LOG_MESSAGE(severity, type, ...) doNothing()
+
+#endif // NLOGS
 
 #define __LOG_BEGIN(severity, type, ...)                                       \
   beginLongMessage(severity,                                                   \

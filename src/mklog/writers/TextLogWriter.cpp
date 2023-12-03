@@ -62,7 +62,7 @@ LogWriter::Status TextLogWriter::writeMessage(const LogMessage& message)
 
   const char* time     = getTimeString(message.timestamp);
   const char* severity = getSeverityString(message.severity);
-  dprintf(logFd, "<%s> [%s] '%s' in '%s' at '%s:%zu': %.*s\n", time, severity,
+  dprintf(logFd, "<%s> [%s] '%s' in '%s' at '%s:%zu':\n\t%.*s\n", time, severity,
           message.source.logger, message.source.function, message.source.file,
           message.source.line, (int)message.contentLen, message.content);
   return Status::OK;
